@@ -1,0 +1,416 @@
+﻿@model MercDevs_ej2.Models.Datosfichatecnica﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        h1 {
+            text-align: center;
+        }
+        h4 {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ficha Tecnica</h1>
+    <h4>id del cliente: @Model.IdDatosFichaTecnica </h4>
+    <h4>fecha inicio: @(Model.FechaInicio?.ToString("dd/MM/yyyy"))</h4>
+    <h4>fecha finalizacion: @(Model.FechaFinalizacion?.ToString("dd/MM/yyyy"))</h4>
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="3">Datos de usuario:</th>
+        </tr>
+        <tr>
+            <th colspan="1">Nombre: @Model.RecepcionEquipo?.IdClienteNavigation.Nombre</th>
+            <th colspan="1">Apellido: @Model.RecepcionEquipo?.IdClienteNavigation.Apellido</th>
+            <th colspan="1">Celular: @Model.RecepcionEquipo?.IdClienteNavigation.Telefono</th>
+        </tr>
+        <tr>
+            <th colspan="2">Correo: @Model.RecepcionEquipo?.IdClienteNavigation.Correo</th>
+            <th colspan="1">Direccion: @Model.RecepcionEquipo?.IdClienteNavigation.Direccion</th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="3"> Observaciones Del usuario</th>
+        </tr>
+        <tr>
+            <th colspan="2">Descripcion</th>
+            <th colspan="1">Check</th>
+        </tr>
+        <tr>
+            <th colspan="2">@Model.PobservacionesRecomendaciones</th>
+            <th colspan="1"><br></th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="5">Datos del Hardware</th>
+        </tr>
+        <tr>
+            <th>Tipo</th>
+            <th>
+                @{
+                    string tipoEquipo = "";
+                    switch (Model.RecepcionEquipo.TipoPc)
+                    {
+                        case 0:
+                            tipoEquipo = "PC Torre";
+                            break;
+                        case 1:
+                            tipoEquipo = "Notebook";
+                            break;
+                        case 2:
+                            tipoEquipo = "All-In-One";
+                            break;
+                        default:
+                            tipoEquipo = "Desconocido";
+                            break;
+                    }
+                    @tipoEquipo
+                }
+            </th>
+            <th>Accesorios:@Model.RecepcionEquipo.Accesorio</th>
+            <th>Cargador</th>
+            <th>Bolso</th>
+        </tr>
+        <tr>
+            <th colspan="2">Marca: @Model.RecepcionEquipo.MarcaPc</th>
+            <th colspan="2">Modelo: @Model.RecepcionEquipo.ModeloPc</th>
+            <th colspan="1">S/N: @Model.RecepcionEquipo.Nserie</th>
+        </tr>
+        <tr>
+            <th>CPU</th>
+            <th>Intel</th>
+            <th>AMD</th>
+            <th colspan="2">Velocidad</th>
+            
+        </tr>
+        <tr>
+            <th colspan="2">RAM (GB)</th>
+            <th colspan="3">
+                    capacidad: @{
+                        string memoriaRam = "";
+                        switch (Model.RecepcionEquipo.CapacidadRam)
+                        {
+                            case 0:
+                                memoriaRam = "4 GB";
+                                break;
+                            case 1:
+                                memoriaRam = "6 GB";
+                                break;
+                            case 2:
+                                memoriaRam = "8 GB";
+                                break;
+                            case 3:
+                                memoriaRam = "16 GB";
+                                break;
+                            case 4:
+                                memoriaRam = "Otro";
+                                break;
+                        }
+                        @memoriaRam
+                    }
+            </th>
+        <tr/>
+        <tr></tr>
+        <tr>
+            <th rowspan="2" colspan="2">Almacenamiento:</th>
+            <th rowspan="2" colspan="2">
+                     @{
+                        string almacenamiento = "";
+                        switch (Model.RecepcionEquipo.TipoAlmacenamiento)
+                        {
+                            case 0:
+                                almacenamiento = "HDD";
+                                break;
+                            case 1:
+                                almacenamiento = "SDD Sata";
+                                break;
+                            case 2:
+                                almacenamiento = "SDD M.2";
+                                break;
+                            case 3:
+                                almacenamiento = "SSD NVM M.2";
+                                break;
+                        }
+                        @almacenamiento
+                    }
+            </th>
+            <th>Capacidad:</th>
+        <tr>
+            <th style="background-color: #dddddd"> @Model.RecepcionEquipo.CapacidadAlmacenamiento</th>
+        </tr>
+        <tr>
+                <th colspan="2">GPU</th>
+                <th colspan="3">
+                        @{
+                            string gpu = "";
+                            switch (Model.RecepcionEquipo.TipoGpu)
+                            {
+                                case 0:
+                                    gpu = "Chip Integrado";
+                                    break;
+                                case 1:
+                                    gpu = "Tarjeta dedicada";
+                                    break;
+                                case 2:
+                                    gpu = "Otro";
+                                    break;
+                            }
+                            @gpu
+                        }
+                </th>
+        </tr>
+        <tr>
+            <th colspan="5">P. Madre:</th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+
+        <tr>
+            <th colspan="5">Datos Software inicial</th>
+        </tr>
+        <tr>
+            <th colspan="1">Sistema operativo</th>
+            <th colspan="2">Windows:</th>
+            <th colspan="2">Linux:</th>
+        </tr>
+        <tr>
+            <th>Software instalado:</th>
+            <th>M. Office:</th>
+            <th>Navegador:
+                 @{
+                    string navegadorwebinstalado = "";
+                    switch (Model.NavegadorWebInstalado)
+                    {
+                        case 0:
+                            navegadorwebinstalado = "microsoft edge";
+                            break;
+                        case 1:
+                            navegadorwebinstalado = "Chrome";
+                            break;
+                        case 2:
+                            navegadorwebinstalado = "Firefox";
+                            break;
+                    }
+                    @navegadorwebinstalado
+                }
+            </th>
+            <th>Lector PDF:
+                @{
+                    string lectorpdfinstalado = "";
+                    switch (Model.Soinstalado)
+                    {
+                        case 0:
+                            lectorpdfinstalado = "No Instalado";
+                            break;
+                        case 1:
+                            lectorpdfinstalado = "Instalado";
+                            break;
+                        case 2:
+                            lectorpdfinstalado = "No Aplica";
+                            break;
+                    }
+                    @lectorpdfinstalado
+                }
+            </th>
+            <th>Compresor</th>
+        </tr>
+        <tr>
+            <th colspan="5">Inconvenientes:</th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="3">Datos Software Final:</th>
+        </tr>
+        <tr>
+            <th colspan="1">S.O instalado</th>
+            <th colspan="2">
+                @{
+                    string soinstalado = "";
+                    switch (Model.Soinstalado)
+                    {
+                        case 0:
+                            soinstalado = "Windows 10";
+                            break;
+                        case 1:
+                            soinstalado = "windows 11";
+                            break;
+                        case 2:
+                            soinstalado = "linux";
+                            break;
+
+                    }
+                    @soinstalado
+                }
+            </th>
+        </tr>
+        <tr>
+            <th rowspan="5">Herramientas de Oficina</th>
+            <th>Suitte Office Instalada</th>
+            <th>
+                @{
+                    string suiteofficeinstalada = "";
+                    switch (Model.Soinstalado)
+                    {
+                        case 0:
+                            suiteofficeinstalada = "Microsoft Office 2013";
+                            break;
+                        case 1:
+                            suiteofficeinstalada = "Microsoft Office 2019";
+                            break;
+                        case 2:
+                            suiteofficeinstalada = "Microsoft Office 365";
+                            break;
+                        case 3:
+                            suiteofficeinstalada = "OpenOffice";
+                            break;
+                    }
+                    @suiteofficeinstalada
+                }
+            </th>
+        </tr>
+        <tr>
+            <th>progrmas instalados</th>
+            <th>
+                @{
+                    string lectorpdfinstalado1 = "";
+                    switch (Model.Soinstalado)
+                    {
+                        case 0:
+                            lectorpdfinstalado1 = "No Instalado";
+                            break;
+                        case 1:
+                            lectorpdfinstalado1 = "Instalado";
+                            break;
+                        case 2:
+                            lectorpdfinstalado1 = "No Aplica";
+                            break;
+                    }
+                    @lectorpdfinstalado1
+                }
+            </th>
+        </tr>
+        <tr>
+            <th>Navegadores Web</th>
+            <th>
+                @{
+                    string navegadorwebinstalado1 = "";
+                    switch (Model.NavegadorWebInstalado)
+                    {
+                        case 0:
+                            navegadorwebinstalado1 = "No Instalado";
+                            break;
+                        case 1:
+                            navegadorwebinstalado1 = "Chrome";
+                            break;
+                        case 2:
+                            navegadorwebinstalado1 = "Chrome y Firefox";
+                            break;
+                    }
+                    @navegadorwebinstalado1
+                }
+            </th>
+        </tr>
+        <tr>
+            <th>Antivirus:</th>
+            <th> @Model.AntivirusInstalado</th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="3" class="tbh"> diagnosticos</th>
+        </tr>
+        <tr>
+            <th colspan="2">Descripcion</th>
+            <th colspan="1">Check</th>
+        </tr>
+        <tr>
+            @if (Model.Diagnosticosolucions == null || !Model.Diagnosticosolucions.Any())
+            {
+                <th class="border-end">No hay diagnostico disponible</th>
+            }
+            else
+            {
+                foreach (var diagnostico in Model.Diagnosticosolucions)
+                {
+                    <th class="border-end">@diagnostico.DescripcionDiagnostico</th>
+                }
+            }
+            <th colspan="4"><br></th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th colspan="2" class="tbh"> Soluciones y/o Intervenciones realizadas</th>
+        </tr>
+        <tr>
+            <th>Descripción</th>
+            <th>Tiempo</th>
+        </tr>
+        <tr>
+            @if (Model.Diagnosticosolucions == null || !Model.Diagnosticosolucions.Any())
+            {
+                <th class="border-end">No hay solucion disponible</th>
+            }
+            else
+            {
+                foreach (var diagnostico in Model.Diagnosticosolucions)
+                {
+                    <th class="border-end">@diagnostico.DescripcionSolucion</th>
+                }
+            }
+            <th></th>
+        </tr>
+    </table>
+
+    <br />
+
+    <table>
+        <tr>
+            <th>Observaciones o Recomendaciones</th>
+        </tr>
+        <tr>
+            <th>@Model.PobservacionesRecomendaciones</th>
+        </tr>
+    </table>
+</body>
+</html>
